@@ -59,7 +59,7 @@ camerahub:
 replicaCount: 2
 
 image:
-  repository: djjudas21/camerahub
+  repository: camerahub/camerahub
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
