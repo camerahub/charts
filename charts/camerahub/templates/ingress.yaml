@@ -15,9 +15,6 @@ metadata:
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-    {{- if .Values.ingress.tls }}
-    kubernetes.io/tls-acme: "true"
-    {{- end }}
 spec:
   {{- if .Values.ingress.tls }}
   tls:
