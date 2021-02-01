@@ -4,38 +4,122 @@
 
 # Global settings
 global:
+  storageClass:
   postgresql:
     username: postgres
     password: postgres
     database: camerahub
+  redis: {}
 
 # Settings for Redis subchart
+# This is a condensed form - see upstream docs for full details
+# https://github.com/bitnami/charts/blob/master/bitnami/redis/values.yaml
 redis:
   usePassword: false
+  password: ""
   cluster:
     enabled: true
     # Additional slaves, excluding the master
     slaveCount: 1
   master:
     persistence:
+      enabled: true
       storageClass: ""
       accessModes: [ReadWriteOnce]
       size: 1Gi
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 100m
   slave:
     persistence:
+      enabled: true
       storageClass: ""
       accessModes: [ReadWriteOnce]
       size: 1Gi
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 100m
+  metrics:
+    enabled: false
+    resources: {}
+    podAnnotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9121"
+    serviceMonitor:
+      enabled: false
+      selector:
+        prometheus: kube-prometheus
+    prometheusRule:
+      enabled: false
+      additionalLabels: {}
+      namespace: ""      
+      rules: []
+  volumePermissions:
+    enabled: false
 
 # Settings for Postgresql-ha subchart
 postgresql-ha:
-  postgresql:
-    # Totel replicas
-    replicaCount: 2
   persistence:
     storageClass: ""
     accessMode: ReadWriteOnce
     size: 8Gi
+  postgresql:
+    # Total replicas
+    replicaCount: 2
+    resources:
+      limits: {}
+      #   cpu: 250m
+      #   memory: 256Mi
+      requests: {}
+      #   cpu: 250m
+      #   memory: 256Mi
+    username: postgres
+    # password:
+    # database:
+    # postgresPassword:
+    syncReplication: false
+    repmgrUsername: repmgr
+    # repmgrPassword:
+    repmgrDatabase: repmgr
+    repmgrConnectTimeout: 5
+    repmgrReconnectAttempts: 3
+    repmgrReconnectInterval: 5
+    maxConnections:
+    postgresConnectionLimit:
+    dbUserConnectionLimit:
+    tcpKeepalivesInterval:
+    tcpKeepalivesIdle:
+    tcpKeepalivesCount:
+    statementTimeout:
+  pgpool:
+    replicaCount: 1
+    resources:
+      limits: {}
+      #   cpu: 250m
+      #   memory: 256Mi
+      requests: {}
+      #   cpu: 250m
+      #   memory: 256Mi
+  metrics:
+    enabled: false
+    resources:
+      limits: {}
+      #   cpu: 250m
+      #   memory: 256Mi
+      requests: {}
+      #   cpu: 250m
+      #   memory: 256Mi
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9187"
+    serviceMonitor:
+      enabled: false
+      selector:
+        prometheus: kube-prometheus
+  volumePermissions:
+    enabled: false
 
 camerahub:
   secretKey: OverrideMe!
@@ -47,7 +131,6 @@ camerahub:
   email:
     backend: "django.core.mail.backends.filebased.EmailBackend"
     sendgridKey: ""
-
     host: ""
     user: ""
     password: ""
