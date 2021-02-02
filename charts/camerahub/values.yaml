@@ -184,7 +184,7 @@ ingress:
     # kubernetes.io/tls-acme:
     # cert-manager.io/issuer:
     # cert-manager.io/cluster-issuer:
-    # certmanager.k8s.io/acme-http01-ingress-class: public
+    # acme.cert-manager.io/http01-ingress-class: public
   tls: false
 
 # Storage for CameraHub media and backups
