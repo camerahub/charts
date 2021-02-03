@@ -54,7 +54,7 @@ redis:
     prometheusRule:
       enabled: false
       additionalLabels: {}
-      namespace: ""      
+      namespace: ""
       rules: []
   volumePermissions:
     enabled: false
@@ -187,6 +187,11 @@ ingress:
     # acme.cert-manager.io/http01-ingress-class: public
   class: public
   tls: false
+
+job:
+  ## Should the job be rescheduled on the same node if it fails, or just stopped
+  restartPolicy: Never
+  backoffLimit: 1
 
 # Storage for CameraHub media and backups
 storage:

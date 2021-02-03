@@ -1,186 +1,67 @@
----
-apiVersion: batch/v1beta1
-kind: CronJob
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: postgres-backup
+  name: "{{ .Release.Name }}-migrations-{{ .Chart.AppVersion }}"
+  labels:
+    {{- include "camerahub.labels" . | nindent 4 }}
 spec:
-  schedule: "0 3 * * *"
-  suspend: true
-  jobTemplate:
+  backoffLimit: {{ .Values.job.backoffLimit }}
+  template:
+    metadata:
+      labels:
+        {{- include "camerahub.selectorLabels" . | nindent 8 }}
     spec:
-      ttlSecondsAfterFinished: 86400
-      template:
-        spec:
-          containers:
-          - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-            name: camerahub
-            command: ["python", "manage.py", "dbbackup"]
-            env:
-              # Secrets first
-              - name: CAMERAHUB_DB_PASS
-                valueFrom:
-                  secretKeyRef:
-                    name: camerahub-secret
-                    key: CAMERAHUB_DB_PASS
-              # then config
-              - name: CAMERAHUB_DB_USER
-                valueFrom:
-                  configMapKeyRef:
-                    name: camerahub-config
-                    key: CAMERAHUB_DB_USER
-              - name: CAMERAHUB_DB_HOST
-                value: postgres
-              - name: CAMERAHUB_DB_NAME
-                value: camerahub
-              - name: CAMERAHUB_DB_PORT
-                value: "5432"
-              - name: CAMERAHUB_DB_ENGINE
-                value: django.db.backends.postgresql
-              - name: CAMERAHUB_PROD
-                valueFrom:
-                  configMapKeyRef:
-                    name: camerahub-config
-                    key: CAMERAHUB_PROD
-                    optional: true
-            volumeMounts:
-              - name: backup
-                mountPath: /camerahub/backup
-                readOnly: false
-          restartPolicy: OnFailure
-          volumes:
-            - name: backup
-              persistentVolumeClaim:
-                claimName: backup
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: media-backup
-spec:
-  schedule: "0 3 * * *"
-  suspend: true
-  jobTemplate:
-    spec:
-      ttlSecondsAfterFinished: 86400
-      template:
-        spec:
-          containers:
-          - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-            name: camerahub
-            command: ["python", "manage.py", "mediabackup"]
-            env:
-              # then config
-              - name: CAMERAHUB_PROD
-                valueFrom:
-                  configMapKeyRef:
-                    name: camerahub-config
-                    key: CAMERAHUB_PROD
-                    optional: true
-            volumeMounts:
-              - name: media
-                mountPath: /camerahub/media
-                readOnly: false
-              - name: backup
-                mountPath: /camerahub/backup
-                readOnly: false
-          restartPolicy: OnFailure
-          volumes:
-            - name: media
-              persistentVolumeClaim:
-                claimName: media
-            - name: backup
-              persistentVolumeClaim:
-                claimName: backup
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: postgres-restore
-spec:
-  schedule: "0 3 * * *"
-  suspend: true
-  jobTemplate:
-    spec:
-      ttlSecondsAfterFinished: 86400
-      template:
-        spec:
-          containers:
-          - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-            name: camerahub
-            command: ["python", "manage.py", "dbrestore", "--noinput"]
-            env:
-              # Secrets first
-              - name: CAMERAHUB_DB_PASS
-                valueFrom:
-                  secretKeyRef:
-                    name: camerahub-secret
-                    key: CAMERAHUB_DB_PASS
-              # then config
-              - name: CAMERAHUB_DB_USER
-                valueFrom:
-                  configMapKeyRef:
-                    name: camerahub-config
-                    key: CAMERAHUB_DB_USER
-              - name: CAMERAHUB_DB_HOST
-                value: postgres
-              - name: CAMERAHUB_DB_NAME
-                value: camerahub
-              - name: CAMERAHUB_DB_PORT
-                value: "5432"
-              - name: CAMERAHUB_DB_ENGINE
-                value: django.db.backends.postgresql
-              - name: CAMERAHUB_PROD
-                valueFrom:
-                  configMapKeyRef:
-                    name: camerahub-config
-                    key: CAMERAHUB_PROD
-                    optional: true
-            volumeMounts:
-              - name: backup
-                mountPath: /camerahub/backup
-                readOnly: false
-          restartPolicy: OnFailure
-          volumes:
-            - name: backup
-              persistentVolumeClaim:
-                claimName: backup
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: media-restore
-spec:
-  schedule: "0 3 * * *"
-  suspend: true
-  jobTemplate:
-    spec:
-      ttlSecondsAfterFinished: 86400
-      template:
-        spec:
-          containers:
-          - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-            name: camerahub
-            command: ["python", "manage.py", "mediarestore", "--noinput"]
-            env:
-              # then config
-              - name: CAMERAHUB_PROD
-                valueFrom:
-                  configMapKeyRef:
-                    name: camerahub-config
-                    key: CAMERAHUB_PROD
-                    optional: true
-            volumeMounts:
-              - name: media
-                mountPath: /camerahub/media
-                readOnly: false
-              - name: backup
-                mountPath: /camerahub/backup
-                readOnly: false
-          restartPolicy: OnFailure
-          volumes:
-            - name: media
-              persistentVolumeClaim:
-                claimName: media
-            - name: backup
-              persistentVolumeClaim:
-                claimName: backup
+      initContainers:
+      - name: "{{ .Chart.Name }}-wait-for-db"
+        image: "groundnuty/k8s-wait-for:1.3"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        args: 
+        - "pod"
+        - "-lapp.kubernetes.io/component=pgpool"
+      containers:
+      - name: {{ .Chart.Name }}-migrations
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        args: ['true']
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+          - name: CAMERAHUB_DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-secret
+                key: CAMERAHUB_DB_PASS
+          - name: CAMERAHUB_DB_USER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-config
+                key: CAMERAHUB_DB_USER            
+          - name: CAMERAHUB_DB_HOST
+            value: {{ .Release.Name }}-postgresql-ha-pgpool
+          - name: CAMERAHUB_DB_NAME
+            value: {{ .Values.global.postgresql.database }}
+          - name: CAMERAHUB_DB_PORT
+            value: "5432"
+          - name: CAMERAHUB_DB_ENGINE
+            value: django.db.backends.postgresql
+          - name: CAMERAHUB_PROD
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-config
+                key: CAMERAHUB_PROD
+                optional: true
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: {{ .Values.job.restartPolicy }}

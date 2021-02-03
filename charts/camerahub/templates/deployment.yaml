@@ -39,23 +39,11 @@ spec:
             httpGet:
               path: /
               port: app-port
-            failureThreshold: 1
-            periodSeconds: 10
-          startupProbe:
-            httpGet:
-              path: /
-              port: app-port
-            failureThreshold: 40
-            periodSeconds: 10
-          #readinessProbe:
-          #  exec:
-          #    command:
-          #      - "curl"
-          #      - "--fail"
-          #      - "http://localhost:8000/"
-          #  periodSeconds: 5
-          #  timeoutSeconds: 1
+            initialDelaySeconds: 3
+            periodSeconds: 5
           env:
+            - name: DJANGO_MANAGEPY_MIGRATE
+              value: 'off'
             # Secrets first
             - name: CAMERAHUB_DB_PASS
               valueFrom:
@@ -160,6 +148,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       #dnsPolicy: ClusterFirst
+      initContainers:
+      - name: "{{ .Chart.Name }}-migrations"
+        image: "groundnuty/k8s-wait-for:1.3"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        args: 
+        - "job"
+        - "{{ .Release.Name }}-migrations-{{ .Chart.AppVersion }}"
       volumes:
       - name: media
         persistentVolumeClaim:
