@@ -54,7 +54,7 @@ redis:
     prometheusRule:
       enabled: false
       additionalLabels: {}
-      namespace: ""      
+      namespace: ""
       rules: []
   volumePermissions:
     enabled: false
