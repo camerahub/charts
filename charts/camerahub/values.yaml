@@ -188,7 +188,7 @@ ingress:
   class: public
   tls: false
 
-job:
+migrations:
   ## Should the job be rescheduled on the same node if it fails, or just stopped
   restartPolicy: Never
   backoffLimit: 1
