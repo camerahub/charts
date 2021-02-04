@@ -133,6 +133,9 @@ spec:
             - name: media
               mountPath: /camerahub/media
               readOnly: false
+            - name: backup
+              mountPath: /camerahub/backup
+              readOnly: false
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
