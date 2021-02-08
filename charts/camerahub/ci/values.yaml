@@ -1,0 +1,4 @@
+# Settings for Postgresql-ha subchart
+postgresql-ha:
+  nameOverride: pg
+  fullnameOverride: pg
