@@ -1,2 +1,2 @@
-postgresql-ha:
-  nameOverride: pg
+# nameOverride: "ch"
+fullnameOverride: "ch"
