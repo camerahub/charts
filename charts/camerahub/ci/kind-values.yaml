@@ -1,2 +1,2 @@
-nameOverride: ch
-fullnameOverride: ch
+nameOverride: 'ch'
+fullnameOverride: 'ch'
