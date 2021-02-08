@@ -1,1 +1,2 @@
-nameOverride: ch
+postgresql-ha:
+  nameOverride: pg
