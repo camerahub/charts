@@ -1,3 +1,6 @@
+storage:
+  enabled: false
+
 postgresql-ha:
   nameOverride: pg
   persistence:
