@@ -116,7 +116,7 @@ spec:
                   key: CAMERAHUB_EMAIL_HOST_PORT
                   optional: true
             - name: CAMERAHUB_DB_HOST
-              value: {{ .Release.Name }}-postgresql-ha-pgpool
+              value: {{ .Release.Name }}-{{ index .Values "postgresql-ha" "nameOverride" }}-pgpool
             - name: CAMERAHUB_DB_NAME
               value: {{ .Values.global.postgresql.database }}
             - name: CAMERAHUB_DB_PORT

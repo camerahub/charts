@@ -81,7 +81,7 @@ postgresql-ha:
     # postgresPassword:
     syncReplication: false
     repmgrUsername: repmgr
-    # repmgrPassword:
+    repmgrPassword: repmgr
     repmgrDatabase: repmgr
     repmgrConnectTimeout: 5
     repmgrReconnectAttempts: 3
@@ -203,6 +203,7 @@ backup:
 
 # Storage for CameraHub media and backups
 storage:
+  enabled: true
   storageClass: ""
   size: 8Gi
   accessModes: [ReadWriteMany]
