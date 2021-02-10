@@ -3,13 +3,3 @@ storage:
 
 postgresql-ha:
   nameOverride: pg
-  persistence:
-    enabled: false
-
-redis:
-  master:
-    persistence:
-      enabled: false
-  slave:
-    persistence:
-      enabled: false
