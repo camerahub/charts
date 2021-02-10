@@ -203,6 +203,7 @@ backup:
 
 # Storage for CameraHub media and backups
 storage:
+  enabled: true
   storageClass: ""
   size: 8Gi
   accessModes: [ReadWriteMany]

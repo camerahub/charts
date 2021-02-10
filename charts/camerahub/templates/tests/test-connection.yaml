@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "camerahub.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "camerahub.fullname" . }}-app:{{ .Values.service.port }}']
   restartPolicy: Never
