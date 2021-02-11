@@ -81,7 +81,7 @@ spec:
                   optional: true
             - name: CAMERAHUB_EMAIL_BACKEND
               valueFrom:
-                secretKeyRef:
+                configMapKeyRef:
                   name: {{ .Release.Name }}-config
                   key: CAMERAHUB_EMAIL_BACKEND
                   optional: true
