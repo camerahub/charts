@@ -61,12 +61,6 @@ spec:
                   name: {{ .Release.Name }}-secret
                   key: CAMERAHUB_SENDGRID_KEY
                   optional: true
-            - name: CAMERAHUB_EMAIL_BACKEND
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-secret
-                  key: CAMERAHUB_EMAIL_BACKEND
-                  optional: true
             - name: CAMERAHUB_EMAIL_HOST_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -84,6 +78,12 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-config
                   key: CAMERAHUB_DOMAIN
+                  optional: true
+            - name: CAMERAHUB_EMAIL_BACKEND
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-config
+                  key: CAMERAHUB_EMAIL_BACKEND
                   optional: true
             - name: CAMERAHUB_EMAIL_USE_TLS
               valueFrom:
