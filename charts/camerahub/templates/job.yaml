@@ -51,7 +51,10 @@ spec:
                 key: CAMERAHUB_PROD
                 optional: true
         resources:
-          {{- toYaml .Values.resources | nindent 12 }}
+          requests:
+            cpu: 100m
+            memory: 128Mi
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
