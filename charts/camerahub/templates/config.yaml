@@ -25,5 +25,5 @@ data:
   CAMERAHUB_EMAIL_HOST_USER: {{ .Values.camerahub.email.user }}
   {{- end }}
   {{- if .Values.camerahub.email.port }}
-  CAMERAHUB_EMAIL_PORT: {{ .Values.camerahub.email.port }}
+  CAMERAHUB_EMAIL_PORT: {{ .Values.camerahub.email.port | quote }}
   {{- end }}
