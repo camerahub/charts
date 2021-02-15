@@ -113,7 +113,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-config
-                  key: CAMERAHUB_EMAIL_HOST_PORT
+                  key: CAMERAHUB_EMAIL_PORT
                   optional: true
             - name: CAMERAHUB_DB_HOST
               value: {{ .Release.Name }}-{{ index .Values "postgresql-ha" "nameOverride" }}-pgpool
