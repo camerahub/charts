@@ -16,11 +16,11 @@ appVersion: 0.28.1
 
 dependencies:
 - name: redis
-  version: 12.4.0
+  version: ~12.4.0
   condition: camerahub.redis
   repository: https://charts.bitnami.com/bitnami
 - name: postgresql-ha
-  version: 6.3.6
+  version: ~6.3.6
   repository: https://charts.bitnami.com/bitnami
 keywords:
   - python
