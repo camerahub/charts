@@ -36,4 +36,11 @@ spec:
                 name: {{ $fullName }}-app
                 port:
                   number: {{ $svcPort }}
+          - path: /media
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}-static
+                port:
+                  number: {{ .Values.static.service.port }}
   {{- end }}
