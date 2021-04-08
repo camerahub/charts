@@ -35,6 +35,11 @@ spec:
             - name: app-port
               containerPort: 8000
               protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: app-port
+            initialDelaySeconds: 15
+            periodSeconds: 20
           readinessProbe:
             httpGet:
               path: /health
