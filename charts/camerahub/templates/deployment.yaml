@@ -37,7 +37,7 @@ spec:
               protocol: TCP
           readinessProbe:
             httpGet:
-              path: /
+              path: /health
               port: app-port
             initialDelaySeconds: 3
             periodSeconds: 5
