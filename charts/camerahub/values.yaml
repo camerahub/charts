@@ -138,6 +138,7 @@ camerahub:
     useTLS: ""
     UseSSL: ""
     port: ""
+  statusURL: ""
 
 # Replicas of CameraHub app server
 replicaCount: 2

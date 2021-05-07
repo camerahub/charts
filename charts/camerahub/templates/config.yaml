@@ -27,3 +27,6 @@ data:
   {{- if .Values.camerahub.email.port }}
   CAMERAHUB_EMAIL_PORT: {{ .Values.camerahub.email.port | quote }}
   {{- end }}
+  {{- if .Values.camerahub.statusURL }}
+  CAMERAHUB_STATUS_URL: {{ .Values.camerahub.statusURL | quote }}
+  {{- end }}
