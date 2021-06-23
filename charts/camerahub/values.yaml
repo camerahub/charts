@@ -11,53 +11,42 @@ global:
     database: camerahub
   redis: {}
 
-# Settings for Redis subchart
-# This is a condensed form - see upstream docs for full details
-# https://github.com/bitnami/charts/blob/master/bitnami/redis/values.yaml
-redis:
-  usePassword: false
-  password: ""
-  cluster:
-    enabled: true
-    # Additional slaves, excluding the master
-    slaveCount: 1
-  master:
-    persistence:
-      enabled: true
-      storageClass: ""
-      accessModes: [ReadWriteOnce]
-      size: 1Gi
-    resources:
-      requests:
-        memory: 256Mi
-        cpu: 100m
-  slave:
-    persistence:
-      enabled: true
-      storageClass: ""
-      accessModes: [ReadWriteOnce]
-      size: 1Gi
-    resources:
-      requests:
-        memory: 256Mi
-        cpu: 100m
+# Settings for memcached subchart
+memcached:
+  ## Memcached architecture. Allowed values: standalone or high-availability
+  architecture: standalone
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 11211
+
+  resources:
+    limits: {}
+    #   cpu: 100m
+    #   memory: 128Mi
+    requests:
+      memory: 256Mi
+      cpu: 250m
+
+  persistence:
+    enabled: false
+    # storageClass: "-"
+    accessModes:
+      - ReadWriteOnce
+    size: 8Gi
+
+  ## Prometheus Exporter / Metrics
   metrics:
     enabled: false
-    resources: {}
-    podAnnotations:
-      prometheus.io/scrape: "true"
-      prometheus.io/port: "9121"
+    resources:
+      limits: {}
+      #   cpu: 100m
+      #   memory: 128Mi
+      requests: {}
+      #   cpu: 100m
+      #   memory: 128Mi
     serviceMonitor:
       enabled: false
-      selector:
-        prometheus: kube-prometheus
-    prometheusRule:
-      enabled: false
-      additionalLabels: {}
-      namespace: ""
-      rules: []
-  volumePermissions:
-    enabled: false
 
 # Settings for Postgresql-ha subchart
 postgresql-ha:
