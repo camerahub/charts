@@ -50,4 +50,11 @@ spec:
                 name: {{ $fullName }}-static
                 port:
                   number: {{ .Values.static.service.port }}
+          - path: /metrics
+            pathType: Prefix
+            backend:
+              service:
+                name: defaultbackend
+                port:
+                  number: 80 
   {{- end }}
