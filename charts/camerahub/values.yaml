@@ -211,6 +211,21 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 15
+  periodSeconds: 20
+  timeoutSeconds: 1
+  successThreshold: 1
+  failureThreshold: 3
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 3
+  periodSeconds: 5
+  timeoutSeconds: 1
+  successThreshold: 1
+  failureThreshold: 3
+
 ## Prometheus Metrics
 ##
 metrics:
