@@ -1,5 +1,5 @@
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: postgres-backup
@@ -52,7 +52,7 @@ spec:
               persistentVolumeClaim:
                 claimName: backup
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: media-backup
@@ -92,7 +92,7 @@ spec:
               persistentVolumeClaim:
                 claimName: backup
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: postgres-restore
@@ -145,7 +145,7 @@ spec:
               persistentVolumeClaim:
                 claimName: backup
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: media-restore
