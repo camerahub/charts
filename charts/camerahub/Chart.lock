@@ -1,9 +1,9 @@
 dependencies:
 - name: memcached
   repository: https://charts.bitnami.com/bitnami
-  version: 5.13.7
+  version: 6.0.22
 - name: postgresql-ha
   repository: https://charts.bitnami.com/bitnami
-  version: 6.3.7
-digest: sha256:066ae108b2f6164c9f86b4572db283441962a7e9bd001310437f4ab6a940fa8a
-generated: "2022-03-25T19:34:22.215982223Z"
+  version: 9.0.13
+digest: sha256:65fd54380aa14cca52084f9d118e51c6ea44a6c6a524d51e6d63634aeb290201
+generated: "2022-06-04T18:07:20.19794008+01:00"
