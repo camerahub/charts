@@ -11,51 +11,12 @@ global:
       username: postgres
       password: postgres
       database: camerahub
-  redis: {}
-
-# Settings for memcached subchart
-memcached:
-  ## Memcached architecture. Allowed values: standalone or high-availability
-  architecture: standalone
-  replicaCount: 1
-  service:
-    type: ClusterIP
-    port: 11211
-
-  resources:
-    limits: {}
-    #   cpu: 100m
-    #   memory: 128Mi
-    requests:
-      memory: 256Mi
-      cpu: 250m
-
-  persistence:
-    enabled: false
-    # storageClass: "-"
-    accessModes:
-      - ReadWriteOnce
-    size: 8Gi
-
-  ## Prometheus Exporter / Metrics
-  metrics:
-    enabled: false
-    resources:
-      limits: {}
-      #   cpu: 100m
-      #   memory: 128Mi
-      requests: {}
-      #   cpu: 100m
-      #   memory: 128Mi
-    serviceMonitor:
-      enabled: false
 
 camerahub:
   secretKey: OverrideMe!
   adminEmail: admin@example.com
   adminPassword: admin
   production: true
-  redis: false
   domain:
   email:
     backend: "django.core.mail.backends.filebased.EmailBackend"
