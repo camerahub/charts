@@ -137,7 +137,7 @@ spec:
                   key: CAMERAHUB_STATUS_URL
                   optional: true
             - name: CAMERAHUB_DB_HOST
-              value: {{ .Release.Name }}-{{ index .Values "postgresql-ha" "nameOverride" }}-pgpool
+              value: {{ .Release.Name }}-{{ index .Values "postgresql" "nameOverride" }}
             - name: CAMERAHUB_DB_NAME
               value: {{ .Values.global.postgresql.database }}
             - name: CAMERAHUB_DB_PORT

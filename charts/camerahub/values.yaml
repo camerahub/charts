@@ -6,9 +6,11 @@
 global:
   storageClass:
   postgresql:
-    username: postgres
-    password: postgres
-    database: camerahub
+    auth:
+      postgresPassword: "postgresadmin"
+      username: postgres
+      password: postgres
+      database: camerahub
   redis: {}
 
 # Settings for memcached subchart
@@ -47,69 +49,6 @@ memcached:
       #   memory: 128Mi
     serviceMonitor:
       enabled: false
-
-# Settings for Postgresql-ha subchart
-postgresql-ha:
-  nameOverride: postgresql-ha
-  persistence:
-    storageClass: ""
-    accessMode: ReadWriteOnce
-    size: 8Gi
-  postgresql:
-    # Total replicas
-    replicaCount: 2
-    resources:
-      limits: {}
-      #   cpu: 250m
-      #   memory: 256Mi
-      requests: {}
-      #   cpu: 250m
-      #   memory: 256Mi
-    username: postgres
-    # password:
-    # database:
-    # postgresPassword:
-    syncReplication: false
-    repmgrUsername: repmgr
-    repmgrPassword: repmgr
-    repmgrDatabase: repmgr
-    repmgrConnectTimeout: 5
-    repmgrReconnectAttempts: 3
-    repmgrReconnectInterval: 5
-    maxConnections:
-    postgresConnectionLimit:
-    dbUserConnectionLimit:
-    tcpKeepalivesInterval:
-    tcpKeepalivesIdle:
-    tcpKeepalivesCount:
-    statementTimeout:
-  pgpool:
-    replicaCount: 1
-    resources:
-      limits: {}
-      #   cpu: 250m
-      #   memory: 256Mi
-      requests: {}
-      #   cpu: 250m
-      #   memory: 256Mi
-  metrics:
-    enabled: false
-    resources:
-      limits: {}
-      #   cpu: 250m
-      #   memory: 256Mi
-      requests: {}
-      #   cpu: 250m
-      #   memory: 256Mi
-    annotations:
-      prometheus.io/scrape: "true"
-      prometheus.io/port: "9187"
-    serviceMonitor:
-      enabled: false
-      selector:
-        prometheus: kube-prometheus
-  volumePermissions:
-    enabled: false
 
 camerahub:
   secretKey: OverrideMe!
@@ -327,3 +266,32 @@ static:
   service:
     type: ClusterIP
     port: 80
+
+postgresql:
+  architecture: standalone
+  primary:
+    resources:
+      limits: {}
+      requests:
+        memory: 256Mi
+        cpu: 250m
+    priorityClassName: ""
+    persistence:
+      enabled: true
+      storageClass: ""
+      accessModes:
+        - ReadWriteOnce
+      size: 8Gi
+  serviceAccount:
+    create: false
+  rbac:
+    create: false
+  metrics:
+    enabled: false
+    resources:
+      limits: {}
+      requests: {}
+    serviceMonitor:
+      enabled: false
+    prometheusRule:
+      enabled: false
