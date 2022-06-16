@@ -17,7 +17,7 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         args: 
         - "pod"
-        - "-lapp.kubernetes.io/component=pgpool"
+        - "-lapp.kubernetes.io/name=postgresql"
       containers:
       - name: {{ .Chart.Name }}-migrations
         securityContext:
