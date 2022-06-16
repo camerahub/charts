@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-config
 data:
-  CAMERAHUB_DB_USER: {{ .Values.global.postgresql.username }}
-  CAMERAHUB_DB_NAME: {{ .Values.global.postgresql.database }}
+  CAMERAHUB_DB_USER: {{ .Values.global.postgresql.auth.username }}
+  CAMERAHUB_DB_NAME: {{ .Values.global.postgresql.auth.database }}
   CAMERAHUB_PROD: {{ .Values.camerahub.production | quote }}
   CAMERAHUB_ADMIN_EMAIL: {{ .Values.camerahub.adminEmail }}
   CAMERAHUB_EMAIL_BACKEND: {{ .Values.camerahub.email.backend }}
