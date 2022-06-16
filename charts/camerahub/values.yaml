@@ -7,9 +7,9 @@ global:
   storageClass:
   postgresql:
     auth:
-      postgresPassword: "postgresadmin"
-      username: postgres
-      password: postgres
+      postgresPassword: postgres
+      username: camerahub
+      password: camerahub
       database: camerahub
 
 camerahub:
