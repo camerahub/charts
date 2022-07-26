@@ -33,4 +33,4 @@ sources:
   - https://github.com/camerahub/camerahub
 maintainers:
   - name: djjudas21
-icon: https://github.com/camerahub/camerahub/blob/master/schema/static/svg/camera.svg
+icon: https://raw.githubusercontent.com/camerahub/camerahub/master/schema/static/svg/camera.svg
