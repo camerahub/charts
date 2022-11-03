@@ -27,6 +27,12 @@ camerahub:
     useTLS: ""
     UseSSL: ""
     port: ""
+  database:
+    # These manual database settings are only used if postgresql.enabled = false
+    host: ""
+    name: ""
+    user: ""
+    password: ""
   statusURL: ""
 
 # Replicas of CameraHub app server
@@ -229,6 +235,7 @@ static:
     port: 80
 
 postgresql:
+  enabled: false
   architecture: standalone
   primary:
     resources:
