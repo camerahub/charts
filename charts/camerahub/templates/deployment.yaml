@@ -93,6 +93,11 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-config
                   key: CAMERAHUB_DB_HOST
+            - name: CAMERAHUB_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-config
+                  key: CAMERAHUB_DB_NAME
             - name: CAMERAHUB_DOMAIN
               valueFrom:
                 configMapKeyRef:
@@ -141,8 +146,6 @@ spec:
                   name: {{ .Release.Name }}-config
                   key: CAMERAHUB_STATUS_URL
                   optional: true
-            - name: CAMERAHUB_DB_NAME
-              value: {{ .Values.global.postgresql.auth.database }}
             - name: CAMERAHUB_DB_PORT
               value: "5432"
             - name: CAMERAHUB_DB_ENGINE
