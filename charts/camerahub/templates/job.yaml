@@ -11,13 +11,6 @@ spec:
       labels:
         {{- include "camerahub.selectorLabels" . | nindent 8 }}
     spec:
-      initContainers:
-      - name: "{{ .Chart.Name }}-wait-for-db"
-        image: "groundnuty/k8s-wait-for:v1.6"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        args: 
-        - "pod"
-        - "-lapp.kubernetes.io/name=postgresql"
       containers:
       - name: {{ .Chart.Name }}-migrations
         securityContext:
