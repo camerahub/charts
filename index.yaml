@@ -2,6 +2,38 @@ apiVersion: v1
 entries:
   camerahub:
   - apiVersion: v2
+    appVersion: 0.36.13
+    created: "2023-04-21T10:28:36.616056742Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~11.9.0
+    description: App for cataloguing vintage cameras, lenses, films, negatives & prints
+    digest: 83d04b05424feaba77107be2ff97921768e8e6c8e0d79d18289781f66af5eb51
+    home: https://camerahub.info/
+    icon: https://raw.githubusercontent.com/camerahub/camerahub/master/schema/static/svg/camera.svg
+    keywords:
+    - python
+    - docker
+    - kubernetes
+    - django
+    - database
+    - photography
+    - lenses
+    - films
+    - negatives
+    - camerahub
+    maintainers:
+    - name: djjudas21
+    name: camerahub
+    sources:
+    - https://github.com/camerahub/camerahub
+    type: application
+    urls:
+    - https://github.com/camerahub/charts/releases/download/camerahub-0.10.11/camerahub-0.10.11.tgz
+    version: 0.10.11
+  - apiVersion: v2
     appVersion: 0.36.12
     created: "2023-04-20T21:50:37.225873479Z"
     dependencies:
@@ -2458,4 +2490,4 @@ entries:
     urls:
     - https://github.com/camerahub/camerahub-charts/releases/download/camerahub-0.1.2/camerahub-0.1.2.tgz
     version: 0.1.2
-generated: "2023-04-20T21:50:37.226223978Z"
+generated: "2023-04-21T10:28:36.616421147Z"
