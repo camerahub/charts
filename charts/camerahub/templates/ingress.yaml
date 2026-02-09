@@ -14,6 +14,13 @@ metadata:
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
+    nginx.ingress.kubernetes.io/server-snippet: |
+      location /metrics {
+        deny all;
+      }
+      location /health {
+        deny all;
+      }
   {{- end }}
 spec:
 {{- if .Values.ingress.class }}
@@ -50,11 +57,4 @@ spec:
                 name: {{ $fullName }}-static
                 port:
                   number: {{ .Values.static.service.port }}
-          - path: /metrics
-            pathType: Prefix
-            backend:
-              service:
-                name: defaultbackend
-                port:
-                  number: 80 
   {{- end }}
