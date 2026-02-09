@@ -7,6 +7,42 @@ entries:
           description: Use Ingress annotations instead of a dummy backend
     apiVersion: v2
     appVersion: 0.36.23
+    created: "2026-02-09T14:34:28.607607352Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~11.9.0
+    description: App for cataloguing vintage cameras, lenses, films, negatives & prints
+    digest: 9cf5997459ffe6054a24a8b3932a83683b1c1fb2125f7cdb4d0eddd8a8d9316b
+    home: https://camerahub.info/
+    icon: https://raw.githubusercontent.com/camerahub/camerahub/master/schema/static/svg/camera.svg
+    keywords:
+    - python
+    - docker
+    - kubernetes
+    - django
+    - database
+    - photography
+    - lenses
+    - films
+    - negatives
+    - camerahub
+    maintainers:
+    - name: djjudas21
+    name: camerahub
+    sources:
+    - https://github.com/camerahub/camerahub
+    type: application
+    urls:
+    - https://github.com/camerahub/charts/releases/download/camerahub-0.11.0/camerahub-0.11.0.tgz
+    version: 0.11.0
+  - annotations:
+      artifacthub.io/changes: |-
+        - kind: changed
+          description: Use Ingress annotations instead of a dummy backend
+    apiVersion: v2
+    appVersion: 0.36.23
     created: "2026-02-09T14:22:26.060394896Z"
     dependencies:
     - condition: postgresql.enabled
@@ -2846,4 +2882,4 @@ entries:
     urls:
     - https://github.com/camerahub/camerahub-charts/releases/download/camerahub-0.1.2/camerahub-0.1.2.tgz
     version: 0.1.2
-generated: "2026-02-09T14:22:26.060643231Z"
+generated: "2026-02-09T14:34:28.607867337Z"
