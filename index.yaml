@@ -7,6 +7,42 @@ entries:
           description: Switch to bitnamilegacy image for Postgres
     apiVersion: v2
     appVersion: 0.36.23
+    created: "2026-05-12T09:49:48.346090835Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~11.9.0
+    description: App for cataloguing vintage cameras, lenses, films, negatives & prints
+    digest: 2598ee6abbaafeb7698fc8a36f40c09883f3ecb8157ec96b9a1ce86500608e5a
+    home: https://camerahub.info/
+    icon: https://raw.githubusercontent.com/camerahub/camerahub/master/schema/static/svg/camera.svg
+    keywords:
+    - python
+    - docker
+    - kubernetes
+    - django
+    - database
+    - photography
+    - lenses
+    - films
+    - negatives
+    - camerahub
+    maintainers:
+    - name: djjudas21
+    name: camerahub
+    sources:
+    - https://github.com/camerahub/camerahub
+    type: application
+    urls:
+    - https://github.com/camerahub/charts/releases/download/camerahub-0.12.1/camerahub-0.12.1.tgz
+    version: 0.12.1
+  - annotations:
+      artifacthub.io/changes: |-
+        - kind: changed
+          description: Switch to bitnamilegacy image for Postgres
+    apiVersion: v2
+    appVersion: 0.36.23
     created: "2026-05-12T09:35:52.179573435Z"
     dependencies:
     - condition: postgresql.enabled
@@ -2918,4 +2954,4 @@ entries:
     urls:
     - https://github.com/camerahub/camerahub-charts/releases/download/camerahub-0.1.2/camerahub-0.1.2.tgz
     version: 0.1.2
-generated: "2026-05-12T09:35:52.179837512Z"
+generated: "2026-05-12T09:49:48.34637217Z"
