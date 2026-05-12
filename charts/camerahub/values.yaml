@@ -236,6 +236,11 @@ static:
 
 postgresql:
   enabled: false
+  image:
+    repository: bitnamilegacy/postgresql
+  global:
+    security:
+      allowInsecureImages: true
   architecture: standalone
   primary:
     resources:
