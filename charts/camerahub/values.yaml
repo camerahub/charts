@@ -261,6 +261,8 @@ postgresql:
     create: false
   metrics:
     enabled: false
+    image:
+      repository: bitnamilegacy/postgres-exporter
     resources:
       limits: {}
       requests: {}
